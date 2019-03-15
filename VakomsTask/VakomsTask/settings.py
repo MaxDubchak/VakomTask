@@ -58,7 +58,7 @@ ROOT_URLCONF = 'VakomsTask.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'VakomsTask.wsgi.application'
 
+DOMAIN = '127.0.0.1:8000'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -105,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -124,6 +124,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Settings for email host server
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'youremail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+
+# JWT Token required settings.
+
+JWT_KEY = 'any secret word'
+JWT_ALGORITHM = 'HS384'
 
 try:
     from VakomsTask.local_settings import *
