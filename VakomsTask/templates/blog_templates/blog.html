@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog of {{user.username}}</title>
-</head>
-<body>
-    <form action="all" method="get">
+{% extends 'base.html' %}
+
+{% block title %}
+Blog of {{user.username}}
+{% endblock %}
+
+{% block body %}
+    <form action="/blog/all" method="get">
         <input type="submit" value="All blogs"/>
     </form>
     {% if form %}
@@ -16,9 +16,9 @@
             <input type="submit" value="Create Blog"/>
         </form>
     {% else %}
-        <h2>{{blog.name}}</h2>
+        <h2>{{user.username}}'s {{blog.name}}</h2>
         {% if user == blog.user %}
-            <form action="/post/new" method="get">
+            <form action= "{% url 'post' blog_id=blog.id %}"  method="get">
                 {{form}}
             <input type="submit" value="Add Post"/>
         </form>
@@ -26,9 +26,12 @@
         {% for post in posts %}
             <h3>{{post.headline}}</h3>
             <p>{{post.text}}</p>
+            <p><b>{{user.username}}</b>  {{post.posted_date}}</p>
+            <form action="{% url 'post' blog_id=blog.id post_id=post.id %}", method="get">
+                <input type="submit" value="Comments">
+            </form>
         {% empty %}
             <h3>No Posts in this blog yet.</h3>
         {% endfor %}
     {% endif %}
-</body>
-</html>
+{% endblock %}

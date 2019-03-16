@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Comment section
+{% endblock %}
+
+{% block body %}
+    <h3>{{post.headline}}</h3>
+    <p>{{post.text}}</p>
+    <p><b>{{post.blog.user.username}}</b>  {{post.posted_date}}</p>
+    {% for comment in comments %}
+        <p>{{comment.user.username}}</p>
+        <p>{{comment.text}}</p>
+        <p>{{comment.commented_date}}</p>
+    {% endfor %}
+    <form action=".." method="get">
+        <input type="submit" value="Back">
+    </form>
+{% endblock %}

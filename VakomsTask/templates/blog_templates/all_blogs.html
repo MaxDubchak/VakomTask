@@ -1,16 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All blogs</title>
-</head>
-<body>
-    <form action=".." method="get">
+{% extends 'base.html' %}
+
+{% block title %}
+All blogs
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'blog' user.blog.id %}" method="get">
         <input type="submit" value="My blog">
     </form>
     {% for blog in blogs %}
         <form action="{% url 'blog' blog.id %}" method="get">
-            <p>Blog: {{blog.name}} of {{blog.user.username}}</p>
+            Blog: {{blog.user.username}}'s {{blog.name}}
             <input type="submit" value="Checkout">
         </form>
         {% empty %}
@@ -20,5 +20,4 @@
                 <input type="sumbit" value="Create blog">
             </form>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

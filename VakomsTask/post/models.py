@@ -17,6 +17,7 @@ class Post(models.Model):
         return f'{self.id} {self.posted_date}'
 
     def to_dict(self):
+        """Method that returns post data as dictionary"""
         return{
             'id': self.id,
             'headline': self.headline,
@@ -27,6 +28,7 @@ class Post(models.Model):
 
     @classmethod
     def create(cls, headline, text, blog):
+        """Method used to create new post instance"""
         post = cls()
         post.headline = headline
         post.text = text
@@ -37,3 +39,18 @@ class Post(models.Model):
             return post
         except(ValueError, IntegrityError, OperationalError):
             return None
+
+    @classmethod
+    def get_by_id(cls, id):
+        """Method that returns instance of post found by id"""
+        try:
+            return cls.objects.get(id=id)
+        except(IntegrityError, OperationalError):
+            return None
+
+    def get_all_comments_ascending(self):
+        """Method that returns all comments of post ordered by date(ascending)"""
+        try:
+            return self.comments.order_by('commented_date')
+        except(ValueError, IntegrityError, OperationalError):
+            return []

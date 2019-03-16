@@ -1,12 +1,12 @@
 """Authentication views module"""
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.db import DatabaseError, IntegrityError
 
 from utils.JWT_helper import decode_token
-from utils.signup_confirm import send_signup_confirm
+from utils.email_helper import send_signup_confirm
 from custom_user.forms import LoginForm, SignupForm
 from custom_user.models import CustomUser
 
@@ -26,13 +26,12 @@ def log_in(request):
                 'username': form.cleaned_data.get('username'),
                 'password': form.cleaned_data.get('password'),
             }
+            print(credentials)
             user = authenticate(request, **credentials)
             if user is not None:
                 login(request, user=user)
-
             else:
-                return HttpResponse('No active user with this username and password combination',
-                                    status=400)
+                return HttpResponse('Unable to authenticate user', status=400)
 
     return render(request, 'auth_templates/login.html', {'form': form})
 
@@ -72,4 +71,4 @@ def signup_confirm(request, token):
     except(DatabaseError, IntegrityError):
         return HttpResponse('Database operation failed', status=400)
 
-    return HttpResponse('User successfully activated', status=200)
+    return HttpResponseRedirect('/blog')

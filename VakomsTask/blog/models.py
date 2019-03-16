@@ -50,9 +50,9 @@ class Blog(models.Model):
         except(IntegrityError, OperationalError):
             return None
 
-    def get_ordered_posts(self):
-        """Method that returns all posts of blog ordered by date"""
+    def get_all_posts_descending(self):
+        """Method that returns all posts of blog ordered by date(descending)"""
         try:
-            return self.posts.order_by('posted_date')
+            return self.posts.order_by('-posted_date')
         except(ValueError, IntegrityError, OperationalError):
             return []

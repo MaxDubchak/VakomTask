@@ -8,8 +8,7 @@ from blog.forms import BlogForm
 
 
 class BlogView(View):
-    """Class that handles HTTP requests for place model."""
-
+    """Class that handles HTTP requests for blog model."""
     def post(self, request, blog_id=None):
         """Handle the request to create a new blog object."""
         form = BlogForm(request.POST)
@@ -25,14 +24,14 @@ class BlogView(View):
         user = request.user
         if blog_id is not None:
             blog = Blog.get_by_id(id=blog_id)
-            posts = blog.get_ordered_posts()
+            posts = blog.get_all_posts_descending()
             return render(request, 'blog_templates/blog.html',
                           {'blog': blog, 'user': user, 'posts': posts})
         else:
-            blog = user.blog.get()
-            if isinstance(blog, Blog):
+            try:
+                blog = user.blog.get()
                 return HttpResponseRedirect(redirect_to=f'/blog/{blog.id}')
-            else:
+            except (Blog.DoesNotExist):
                 form = BlogForm()
                 return render(request, 'blog_templates/blog.html',
                               {'form': form})

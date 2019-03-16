@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Signup Page</title>
-</head>
-<body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Sign Up">
-    </form>
-    <br>
+{% extends 'auth_templates/base_auth.html' %}
+
+{% block title %} Signup Page {% endblock %}
+{% block button %}
     <form action="login" method="get">
         <input type="submit" value="Back">
     </form>
-</body>
-</html>
+{% endblock %}
