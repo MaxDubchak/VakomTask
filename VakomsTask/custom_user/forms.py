@@ -14,6 +14,7 @@ class SignupForm(forms.ModelForm):
     """Form used for user registration"""
     class Meta:
         model = CustomUser
+        exclude = ['']
         labels = {
             'first_name': 'first name',
             'last_name': 'last name',

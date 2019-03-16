@@ -24,9 +24,7 @@ Blog of {{user.username}}
         </form>
         {% endif %}
         {% for post in posts %}
-            <h3>{{post.headline}}</h3>
-            <p>{{post.text}}</p>
-            <p><b>{{user.username}}</b>  {{post.posted_date}}</p>
+            {% include 'blog_templates/post_display.html' %}
             <form action="{% url 'post' blog_id=blog.id post_id=post.id %}", method="get">
                 <input type="submit" value="Comments">
             </form>
