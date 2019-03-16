@@ -14,7 +14,6 @@ class SignupForm(forms.ModelForm):
     """Form used for user registration"""
     class Meta:
         model = CustomUser
-        fields = ('username', 'password', 'email', 'first_name', 'last_name', 'phone_number')
         labels = {
             'first_name': 'first name',
             'last_name': 'last name',

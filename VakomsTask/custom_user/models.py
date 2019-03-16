@@ -1,24 +1,16 @@
 """This module implements class that represents the user entity."""
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-from django.core.validators import RegexValidator
+from django.contrib.auth.models import AbstractUser
 from django.db import models, IntegrityError, OperationalError
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractUser):
     """Model for User entity."""
     username = models.CharField(max_length=64, unique=True)
     password = models.CharField(max_length=128)
     email = models.EmailField(max_length=64, unique=True)
     first_name = models.CharField(max_length=32, blank=True)
     last_name = models.CharField(max_length=32, blank=True)
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                 message="Phone number must be entered in the format:"
-                                         " '+380 555555555'. Up to 16 digits allowed.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=16)
-    is_active = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'username'
-    objects = BaseUserManager()
+    phone_number = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
         """Method that returns user instance as string."""
@@ -40,6 +32,7 @@ class CustomUser(AbstractBaseUser):
         """Method used to create """
         user = cls()
         user.set_password(password)
+        user.is_active = False
         for key, value in kwargs.items():
             setattr(user, key, value)
         try:

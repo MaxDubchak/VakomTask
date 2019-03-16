@@ -10,7 +10,6 @@ from blog.models import Blog
 
 class PostView(View):
     """Class that handles HTTP requests for blog post model."""
-
     def post(self, request, blog_id, post_id):
         """Handle the request to create a new post object."""
         blog = Blog.get_by_id(id=blog_id)
