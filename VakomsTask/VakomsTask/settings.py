@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'comment',
 ]
 
+AUTH_USER_MODEL = 'custom_user.CustomUser'
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

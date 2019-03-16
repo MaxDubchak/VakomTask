@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All blogs</title>
+</head>
+<body>
+    <form action=".." method="get">
+        <input type="submit" value="My blog">
+    </form>
+    {% for blog in blogs %}
+        <form action="{% url 'blog' blog.id %}" method="get">
+            <p>Blog: {{blog.name}} of {{blog.user.username}}</p>
+            <input type="submit" value="Checkout">
+        </form>
+        {% empty %}
+            <h2>There are no blogs yet</h2>
+            <p>Create your first blog</p>
+            <form action="blog" method="get">
+                <input type="sumbit" value="Create blog">
+            </form>
+    {% endfor %}
+</body>
+</html>

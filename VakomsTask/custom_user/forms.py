@@ -1,3 +1,4 @@
+"""Module that implements forms for user authentication"""
 from django import forms
 
 from custom_user.models import CustomUser

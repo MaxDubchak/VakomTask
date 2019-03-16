@@ -5,13 +5,13 @@
     <title>Signup Page</title>
 </head>
 <body>
-    <form action="/signup" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Sign Up">
     </form>
     <br>
-    <form action="/" method="get">
+    <form action="login" method="get">
         <input type="submit" value="Back">
     </form>
 </body>

@@ -10,7 +10,7 @@ from utils.signup_confirm import send_signup_confirm
 from custom_user.forms import LoginForm, SignupForm
 from custom_user.models import CustomUser
 
-INITIAL_PHONE_NUMBER = {'phone_number': '+380'}
+INITIAL_PHONE_NUMBER = {'phone_number': '+380 '}
 
 
 @require_http_methods(['GET', 'POST'])
@@ -22,15 +22,16 @@ def log_in(request):
     else:
         form = LoginForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            credentials = ['username', 'password']
-            credentials = [form.cleaned_data[field] for field in credentials]
-            user = authenticate(credentials)
+            credentials = {
+                'username': form.cleaned_data.get('username'),
+                'password': form.cleaned_data.get('password'),
+            }
+            user = authenticate(request, **credentials)
             if user is not None:
-                login(request, user)
+                login(request, user=user)
 
             else:
-                return HttpResponse('No active user with this email password combination',
+                return HttpResponse('No active user with this username and password combination',
                                     status=400)
 
     return render(request, 'auth_templates/login.html', {'form': form})

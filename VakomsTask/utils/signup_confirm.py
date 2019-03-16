@@ -6,7 +6,7 @@ from django.conf import settings
 
 def send_signup_confirm(email):
     token = create_token(data={'email': email})
-    link = f'http://{settings.DOMAIN}/activate/{token}'
+    link = f'http://{settings.DOMAIN}/auth/activate/{token}'
     was_sent = send_mail(
         subject='Confirm Sign up',
         message='To confirm your sign up on the VakomsTask web site follow the link ' + link,
