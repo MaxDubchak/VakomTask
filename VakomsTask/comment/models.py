@@ -18,6 +18,7 @@ class Comment(models.Model):
         return f'{self.id} {self.commented_date}'
 
     def to_dict(self):
+        """Method that returns comment data as dictionary"""
         return{
             'id': self.id,
             'text': self.text,
@@ -28,6 +29,7 @@ class Comment(models.Model):
 
     @classmethod
     def create(cls, text, post, user):
+        """Method used to create new comment instance"""
         comment = cls()
         comment.text = text
         comment.post = post

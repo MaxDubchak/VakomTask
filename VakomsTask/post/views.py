@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
+from comment.forms import CommentForm
 from post.models import Post
 from post.forms import PostForm
 from blog.models import Blog
@@ -35,5 +36,6 @@ class PostView(View):
         else:
             post = Post.get_by_id(id=post_id)
             comments = post.get_all_comments_ascending()
+            form = CommentForm()
             return render(request, 'blog_templates/post.html',
-                          {'post': post, 'comments': comments})
+                          {'post': post, 'comments': comments, 'form': form})

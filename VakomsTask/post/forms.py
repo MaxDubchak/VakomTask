@@ -1,4 +1,4 @@
-"""Module that implements form for blog creation"""
+"""Module that implements form for post creation"""
 from django import forms
 
 

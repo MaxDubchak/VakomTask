@@ -6,12 +6,17 @@ Comment section
 
 {% block body %}
     {% include 'blog_templates/post_display.html' %}
+    <form action=".." method="get">
+        <input type="submit" value="Back">
+    </form>
+    <form action="{% url 'comment' blog_id=post.blog.id post_id=post.id %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Comment">
+    </form>
     {% for comment in comments %}
         <p>{{comment.user.username}}</p>
         <p>{{comment.text}}</p>
         <p>{{comment.commented_date}}</p>
     {% endfor %}
-    <form action=".." method="get">
-        <input type="submit" value="Back">
-    </form>
 {% endblock %}

@@ -14,3 +14,18 @@ def send_signup_confirm(email):
         recipient_list=[email]
     )
     return was_sent
+
+
+def send_on_comment_email(post, comment):
+    user = post.blog.user
+    link = f'http://{settings.DOMAIN}/blog/{post.blog.id}/post/{post.id}'
+    was_sent = send_mail(
+        subject='Your post on blog was commented',
+        message=f'{user.username}, your post {post.headline} '
+        f'was commented by {comment.user.username}, '
+        f'checkout this link to see post with the comment {link}',
+
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[user.email]
+    )
+    return was_sent
