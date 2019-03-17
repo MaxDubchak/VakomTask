@@ -27,7 +27,6 @@ def log_in(request):
                 'username': form.cleaned_data.get('username'),
                 'password': form.cleaned_data.get('password'),
             }
-            print(credentials)
             user = authenticate(request, **credentials)
             if user is not None:
                 login(request, user=user)
