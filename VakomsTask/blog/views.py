@@ -1,6 +1,7 @@
 """Blog views module"""
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
 
 from blog.models import Blog
@@ -17,7 +18,7 @@ class BlogView(View):
             if not blog:
                 return HttpResponse('Database operation failed', status=400)
 
-            return HttpResponseRedirect(redirect_to=f'/blog/{blog.id}')
+            return HttpResponseRedirect(reverse('blog', args=[blog.id]))
 
     def get(self, request, blog_id=None):
         """Handle request to retrieve blog's objects"""
@@ -30,7 +31,7 @@ class BlogView(View):
         else:
             try:
                 blog = user.blog.get()
-                return HttpResponseRedirect(redirect_to=f'/blog/{blog.id}')
+                return HttpResponseRedirect(reverse('blog', args=[blog.id]))
             except (Blog.DoesNotExist):
                 form = BlogForm()
                 return render(request, 'blog_templates/blog.html',

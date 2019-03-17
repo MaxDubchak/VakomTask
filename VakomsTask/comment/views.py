@@ -1,5 +1,6 @@
 """Post views module"""
 from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from comment.models import Comment
@@ -16,9 +17,12 @@ def post_comment(request, blog_id, post_id):
     if form.is_valid():
         text = form.cleaned_data['text']
         comment = Comment.create(text=text, post=post, user=request.user)
+
         if not comment:
             return HttpResponse('Database operation failed', status=400)
+
         was_sent = send_on_comment_email(post, comment)
         if not was_sent:
             return HttpResponse('Unable to send email', status=502)
-        return HttpResponseRedirect(redirect_to=f'/blog/{blog_id}/post/{post_id}')
+
+        return HttpResponseRedirect(reverse('post', args=[blog_id, post_id]))

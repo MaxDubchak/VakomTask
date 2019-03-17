@@ -25,8 +25,9 @@ SECRET_KEY = '!7-ghm&@gjf^f4^-+_b6#ar5n63y7x+_w(1es--vun)3^36cur'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+DOMAIN = '127.0.0.1:8000'
 
 # Application definition
 
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.login_required.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'VakomsTask.urls'
@@ -75,8 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'VakomsTask.wsgi.application'
-
-DOMAIN = '127.0.0.1:8000'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

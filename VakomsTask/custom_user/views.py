@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.db import DatabaseError, IntegrityError
+from django.urls import reverse
 
 from utils.JWT_helper import decode_token
 from utils.email_helper import send_signup_confirm
@@ -30,6 +31,7 @@ def log_in(request):
             user = authenticate(request, **credentials)
             if user is not None:
                 login(request, user=user)
+                return HttpResponseRedirect(reverse('home'))
             else:
                 return HttpResponse('Unable to authenticate user', status=400)
 
@@ -71,4 +73,4 @@ def signup_confirm(request, token):
     except(DatabaseError, IntegrityError):
         return HttpResponse('Database operation failed', status=400)
 
-    return HttpResponseRedirect('/blog')
+    return HttpResponseRedirect(reverse('blog'))
